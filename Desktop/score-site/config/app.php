@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Score Painel'),
+    'name' => env('APP_NAME', 'PAINEL SCORE'),
 
     /*
     |--------------------------------------------------------------------------
