@@ -1,0 +1,30 @@
+{
+  "short_name": "Ofertas Ford",
+  "name": "Ofertas Ford - Portal de Ofertas | Ford Brasil",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "homescreen128.png",
+      "sizes": "128x128 64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "homescreen192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "homescreen512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./",
+  "display": "standalone",
+  "theme_color": "#081c30",
+  "background_color": "#ffffff"
+}

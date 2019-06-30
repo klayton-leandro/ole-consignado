@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /api/
+Disallow: /cadastro
+
+Sitemap: https://www.ofertasford.com.br/sitemap.xml
