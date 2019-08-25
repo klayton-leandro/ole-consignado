@@ -1,0 +1,109 @@
+
+/* Box Branco */
+
+.box-tint-white {
+  border: 1px solid #dfdfdf;
+}
+
+/* Box Amarelo */
+
+.box-tint-yellow {
+  background-color: #FFFF99;
+  border: 1px solid #dfdfdf;
+}
+
+/* ------------------ */ 
+
+
+/* Aviso Home Vitrines */ 
+
+.block #block-body, .block #header-box-qtip {
+  padding: 10px;
+  display: table;
+}
+
+.block #block-body {
+  margin: 0 20px 0 20px;
+  padding: 15px;
+}
+
+.block #block-body .fa, .block #header-box-qtip .fa {
+  color: #c2c085;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+
+.block .block-msg .fa {
+  display: table-cell;
+  margin: 5px 15px 0 10px;
+  color: #c1c1c1;
+}
+
+/* ------------------ */ 
+
+
+/* Pagina produto */
+
+#header-box-qtip p {
+    font-size: 12px;
+    margin: 0px 10px 0px 20px;
+}
+
+.block .alert-buy-btn {
+  width: 96%;
+  padding: 10px;
+  margin: 45px 0 35px 0;
+  display: table;
+}
+
+.block .alert-buy-btn .fa {
+  display: table-cell;
+  vertical-align: middle;
+  color: #c2c085;
+}
+
+.block #inside-product-cart-form .btn-buy, .block #inside-product-cart-form .btn-buy:hover, .block #inside-product-cart-form .btn-buy:active  {
+  background-color: #efefef !important;
+  color: #999999 !important;
+  border: 1px solid #d8d8d8 !important;
+  cursor: not-allowed !important;
+}
+
+/* ------------------ */ 
+
+.block #block-body .msg, .block .alert-buy-btn p {
+  padding-left: 20px;
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 15px;
+  line-height: 150%;
+}
+
+/* ------------------ */ 
+
+.block form input[type="submit"],.block form input[type="submit"]:hover {
+  color: #656565;
+  background: #cacbcc;
+}
+
+#section-login-form #btn-forgot {
+  color: #828387;
+}
+
+
+/* TOOLTIP */
+
+.qtip {
+  max-width: 800px !important;
+  font-size: 13px;
+}
+
+.qtip .alert-buy-btn, .qtip .block-msg {
+  margin: 0 !important;
+  border: 0;
+}
+
+.qtip .alert-buy-btn p, .qtip .block-msg p {
+  line-height: 15px;
+}
