@@ -27,6 +27,4 @@ server.use(indexRouters)
 server.listen(3000,function(req,res){
     console.log('rodando servidor modelo em dev') 
 });
-
-
 // mongoose.connect("mongodb://");
