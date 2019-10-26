@@ -1,45 +1,49 @@
 import { all, takeLatest, call, put } from 'redux-saga/effects';
-import {Alert} from 'react-native';
+import { Alert } from 'react-native';
 import api from '~/services/api';
 import { signInSuccess, signFailure } from './actions';
 import SignIn from '~/pages/SignIn';
 
 export function* signIn({ payload }) {
   try {
-    const {email,password} = payload;
-    const response = yield call(api.post,'sessions', {
+    const { email, password } = payload;
+    const response = yield call(api.post, 'sessions', {
       email,
-      password
+      password,
     });
 
-    const { token , users} = response.data;
-    yield put(signInSuccess(token,users));
-    if (!token, users){
-      Alert.alert('Email não cadastrado','revise os dados informados !')
+    const { token, users } = response.data;
+    yield put(signInSuccess(token, users));
+    if ((!token, users)) {
+      Alert.alert('Email não cadastrado', 'revise os dados informados !');
       yield put(signFailure());
-      api.defaults.headers.Authorization =  `Bearer ${token}`;
+      api.defaults.headers.Authorization = `Bearer ${token}`;
       return;
     }
-  }catch(error){
-    Alert.alert('Dados incorretos','Verifique dados informados !');
+  } catch (error) {
+    Alert.alert('Dados incorretos', 'Verifique dados informados !');
     yield put(signFailure());
   }
 }
 export function* signUp({ payload }) {
   try {
-    const { name, email, password } = payload;
+    const { name, telefone, cpf, email, password } = payload;
+
+    console.tron.log(payload);
 
     yield call(api.post, 'users', {
       name,
+      telefone,
+      cpf,
       email,
       password,
     });
-    Alert.alert('Usuario cadastrado com sucesso [!]','Obrigado pela sua escolha[!]');
-    yield put(SignIn());
 
-    // history.push('/');
+    Alert.alert('Aviso', 'Usuário cadastrado com sucesso!');
+
+    history.push('SignIn');
   } catch (error) {
-    Alert.alert('Usuario já cadastrado [X]','Revise os dados informados [!]');
+    Alert.alert('Aviso', 'Revise os dados informados');
     yield put(signFailure());
   }
 }
@@ -58,5 +62,4 @@ export default all([
   takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
   takeLatest('@auth/SIGN_UP_REQUEST', signUp),
-
 ]);

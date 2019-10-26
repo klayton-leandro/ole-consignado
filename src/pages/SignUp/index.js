@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
-import { TouchableOpacity, Image } from "react-native";
+import React, { useRef, useState } from 'react';
+import { TouchableOpacity, Image, Alert } from 'react-native';
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 
-import { signUpRequest } from "~/store/modules/auth/actions";
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { signUpRequest } from '~/store/modules/auth/actions';
 
 import {
   Container,
@@ -11,53 +12,67 @@ import {
   Title,
   SubTitle,
   Header,
-  SubmitButton
-} from "./styles";
-import { FormInput, Scroll } from "../SignIn/styles";
+  SubmitButton,
+} from './styles';
+import { FormInput, Scroll } from '../SignIn/styles';
 
-import Icon from "react-native-vector-icons/MaterialIcons";
-import mancha from "~/assets/mancha.png";
+import mancha from '~/assets/mancha.png';
 
 export default function SignUp({ navigation }) {
   const dispath = useDispatch();
-  const emailRef = useRef();
+
   const cpfRef = useRef();
   const telefoneRef = useRef();
+  const emailRef = useRef();
   const passwordRef = useRef();
+
   const loading = useSelector(state => state.auth.loading);
 
-  const [name, setName] = useState();
-  const [cpf, setCpf] = useState();
-  const [telefone, setTelefone] = useState();
-  const [email, setEmail] = useState();
+  const [name, setName] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [telefone, setTelefone] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const [password, setPassword] = useState();
   function handleSubmit() {
-    dispath(signUpRequest(name, email, password));
+    if (!name) {
+      Alert.alert('Aviso', 'Nome é obrigatório.');
+    } else if (!cpf) {
+      Alert.alert('Aviso', 'CPF é obrigatório.');
+    } else if (!telefone) {
+      Alert.alert('Aviso', 'Telefone é obrigatório.');
+    } else if (!email) {
+      Alert.alert('Aviso', 'Email é obrigatório.');
+    } else if (password.length < 6) {
+      Alert.alert('Aviso', 'Sua senha deve ter no mínimo 6 caracteres.');
+    } else {
+      dispath(signUpRequest(name, cpf, telefone, email, password));
+    }
   }
+
   return (
     <Scroll>
       <Container>
         <Header>
-          <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+          <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
             <Icon name="arrow-back" size={30} color="#CD0D0E" />
           </TouchableOpacity>
         </Header>
         <Image
           source={mancha}
           style={{
-            position: "absolute",
+            position: 'absolute',
             top: -280,
             left: -150,
 
-            zIndex: -1
+            zIndex: -1,
           }}
         />
         <Title>Cadastra-se</Title>
         <SubTitle>Precisamos de alguns dados para efetuar o cadastro</SubTitle>
         <Image
           source={mancha}
-          style={{ position: "absolute", top: -380, left: -150 }}
+          style={{ position: 'absolute', top: -380, left: -150 }}
         />
         <Form>
           <FormInput
@@ -78,7 +93,9 @@ export default function SignUp({ navigation }) {
             ref={cpfRef}
             onSubmitEditing={() => telefoneRef.current.focus()}
             value={cpf}
-            onChangeText={setCpf}
+            onChangeText={value => setCpf(value)}
+            masked
+            type="cpf"
           />
 
           <FormInput
@@ -89,7 +106,9 @@ export default function SignUp({ navigation }) {
             ref={telefoneRef}
             onSubmitEditing={() => emailRef.current.focus()}
             value={telefone}
-            onChangeText={setTelefone}
+            onChangeText={value => setTelefone(value)}
+            masked
+            type="cel-phone"
           />
 
           <FormInput
