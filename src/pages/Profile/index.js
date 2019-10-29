@@ -1,104 +1,150 @@
-import React, {useRef, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import React, { useRef, useState } from 'react';
+import { TouchableOpacity, Image, Alert } from 'react-native';
+
+import { useDispatch, useSelector } from 'react-redux';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
-// import { Container } from './styles';
-import { signOut } from '~/store/modules/auth/actions';
+import { signUpRequest } from '~/store/modules/auth/actions';
 
-import {Container,Title, Form, FormInput, SubmitButton, Separator, LogoutButton} from './style';
+import {
+  Container,
+  Form,
+  Title,
+  SubTitle,
+  Header,
+  SubmitButton,
+} from './styles';
+import { FormInput, Scroll } from '../SignIn/styles';
 
-import Background from '~/components/Background';
-import { dispatch } from 'rxjs/internal/observable/pairs';
+import mancha from '~/assets/mancha.png';
 
-export default function Profile() {
-  const dispatch = useDispatch();
-  const profile = useSelector(state => state.user.profile);
+export default function Profile({ navigation }) {
+  const dispath = useDispatch();
+
+  const cpfRef = useRef();
+  const telefoneRef = useRef();
   const emailRef = useRef();
-  const oldPasswordRef =useRef();
-  const PasswordRef =useRef();
-  const confirmPasswordRef =useRef();
+  const usernameRef = useRef();
+  const passwordRef = useRef();
 
-  const [ name, setName] = useState('Dono apple');
-  const [ email, setEmail] = useState('dono@apple.com.br');
-  const [ oldPassword, setOldPassword] = useState('');
-  const [ password, setPassword] = useState('');
-  const [ confirmPassoword, setConfirmPassword] =useState('');
+  const loading = useSelector(state => state.auth.loading);
 
-function handleSubmit (){
-}
+  const [name, setName] = useState('232323');
+  const [cpf, setCpf] = useState('2322323');
+  const [telefone, setTelefone] = useState('2232323');
+  const [email, setEmail] = useState('2323e232323');
+  const [username, setUsername] = useState('232233');
+  const [password, setPassword] = useState('232323');
 
-function handleLogout (){
-  dispatch(signOut());
-}
+  function handleSubmit() {
+    if (!name) {
+      Alert.alert('Aviso', 'Nome é obrigatório.');
+    } else if (!cpf) {
+      Alert.alert('Aviso', 'CPF é obrigatório.');
+    } else if (!telefone) {
+      Alert.alert('Aviso', 'Telefone é obrigatório.');
+    } else if (!email) {
+      Alert.alert('Aviso', 'Email é obrigatório.');
+    } else if (password.length < 6) {
+      Alert.alert('Aviso', 'Sua senha deve ter no mínimo 6 caracteres.');
+    } else {
+      dispath(signUpRequest(name, cpf, telefone, email, username, password));
+    }
+  }
+
   return (
-    <Background>
+    <Scroll>
       <Container>
-        <Title>Meu Perfil</Title>
+        <Header>
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <Icon name="menu" size={30} color="#CD0D0E" />
+          </TouchableOpacity>
+        </Header>
+        <Image
+          source={mancha}
+          style={{
+            position: 'absolute',
+            top: -280,
+            left: -150,
+            zIndex: -1,
+          }}
+        />
+        <Title>Perfil</Title>
+
+        <Image
+          source={mancha}
+          style={{ position: 'absolute', top: -380, left: -150 }}
+        />
         <Form>
-        <FormInput
-              icon="person-outline"
-              autoCorrect={false}
-              autoCapitalize="none"
-              placeholder= "Nome Completo"
-              onSubmitEditing={()=> emailRef.current.focus()}
-              value={name}
-              onChangeText={setName}
-            />
+          <FormInput
+            icon="person-outline"
+            autoCorrect={false}
+            autoCapitalize="none"
+            placeholder="Nome"
+            onSubmitEditing={() => cpfRef.current.focus()}
+            value={name}
+            onChangeText={setName}
+          />
 
-            <FormInput
-              icon="mail-outline"
-              placeholder="Digite seu E-mail"
-              autocorrect={false}
-              autoCapitalize="none"
-              ref={emailRef}
-              onSubmitEditing={()=> oldPasswordRef.current.focus()}
-              value={email}
-              onChangeText={setEmail}
-            />
-            <Separator />
+          <FormInput
+            icon="recent-actors"
+            placeholder="CPF"
+            autocorrect={false}
+            autoCapitalize="none"
+            ref={cpfRef}
+            onSubmitEditing={() => telefoneRef.current.focus()}
+            value={cpf}
+            onChangeText={value => setCpf(value)}
+            masked
+            type="cpf"
+          />
 
-            <FormInput
-              icon="lock-outline"
-              secureTextEntry
-              placeholder="Sua senha atual"
-              ref={oldPasswordRef}
-              returnKeyType="next"
-              onSubmitEditing={()=> PasswordRef.current.focus()}
-              value={oldPassword}
-              onChangeText={setOldPassword}
-            />
+          <FormInput
+            icon="call"
+            placeholder="Telefone"
+            autocorrect={false}
+            autoCapitalize="none"
+            ref={telefoneRef}
+            onSubmitEditing={() => emailRef.current.focus()}
+            value={telefone}
+            onChangeText={value => setTelefone(value)}
+            masked
+            type="cel-phone"
+          />
 
-            <FormInput
-              icon="lock-outline"
-              secureTextEntry
-              placeholder="sua nova senha"
-              ref={PasswordRef}
-              returnKeyType="next"
-              onSubmitEditing={()=> confirmPasswordRef.current.focus()}
-              value={password}
-              onChangeText={setPassword}
-            />
-
-            <FormInput
-              icon="lock-outline"
-              secureTextEntry
-              placeholder="Confirme sua senha"
-              ref={confirmPasswordRef}
-              returnKeyType="send"
-              onSubmitEditing={handleSubmit}
-              value={confirmPassoword}
-              onChangeText={setConfirmPassword}
-            />
-            <SubmitButton onPress={handleSubmit}>Atualizar perfil</SubmitButton>
-            <LogoutButton onPress={handleLogout}>Sair</LogoutButton>
+          <FormInput
+            icon="mail-outline"
+            placeholder="Digite seu E-mail"
+            autocorrect={false}
+            autoCapitalize="none"
+            ref={emailRef}
+            onSubmitEditing={() => usernameRef.current.focus()}
+            value={email}
+            onChangeText={setEmail}
+          />
+          <FormInput
+            icon="lock-outline"
+            placeholder="Usuário"
+            ref={usernameRef}
+            onSubmitEditing={() => passwordRef.current.focus()}
+            value={username}
+            onChangeText={setUsername}
+          />
+          <FormInput
+            icon="lock-outline"
+            secureTextEntry
+            placeholder="Digite sua senha"
+            ref={passwordRef}
+            returnKeyType="send"
+            onSubmitEditing={handleSubmit}
+            value={password}
+            onChangeText={setPassword}
+          />
         </Form>
-        </Container>
-    </Background>
+        <SubmitButton loading={loading} onPress={handleSubmit}>
+          Atualizar
+        </SubmitButton>
+      </Container>
+    </Scroll>
   );
 }
-
-Profile.navigationOptions = {
-  tabBarLabel: 'Meu perfil',
-  tabBarIcon: ({tintColor }) => (
-    <Icon name="person" size={30} color={tintColor} />
-  ),
-};

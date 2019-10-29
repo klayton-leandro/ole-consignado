@@ -24,15 +24,17 @@ export default function SignUp({ navigation }) {
   const cpfRef = useRef();
   const telefoneRef = useRef();
   const emailRef = useRef();
+  const usernameRef = useRef();
   const passwordRef = useRef();
 
   const loading = useSelector(state => state.auth.loading);
 
-  const [name, setName] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [telefone, setTelefone] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState('232323');
+  const [cpf, setCpf] = useState('2322323');
+  const [telefone, setTelefone] = useState('2232323');
+  const [email, setEmail] = useState('2323e232323');
+  const [username, setUsername] = useState('232233');
+  const [password, setPassword] = useState('232323');
 
   function handleSubmit() {
     if (!name) {
@@ -46,7 +48,7 @@ export default function SignUp({ navigation }) {
     } else if (password.length < 6) {
       Alert.alert('Aviso', 'Sua senha deve ter no mínimo 6 caracteres.');
     } else {
-      dispath(signUpRequest(name, cpf, telefone, email, password));
+      dispath(signUpRequest(name, cpf, telefone, email, username, password));
     }
   }
 
@@ -64,7 +66,6 @@ export default function SignUp({ navigation }) {
             position: 'absolute',
             top: -280,
             left: -150,
-
             zIndex: -1,
           }}
         />
@@ -117,9 +118,17 @@ export default function SignUp({ navigation }) {
             autocorrect={false}
             autoCapitalize="none"
             ref={emailRef}
-            onSubmitEditing={() => passwordRef.current.focus()}
+            onSubmitEditing={() => usernameRef.current.focus()}
             value={email}
             onChangeText={setEmail}
+          />
+          <FormInput
+            icon="lock-outline"
+            placeholder="Usuário"
+            ref={usernameRef}
+            onSubmitEditing={() => passwordRef.current.focus()}
+            value={username}
+            onChangeText={setUsername}
           />
           <FormInput
             icon="lock-outline"

@@ -2,7 +2,6 @@ import { all, takeLatest, call, put } from 'redux-saga/effects';
 import { Alert } from 'react-native';
 import api from '~/services/api';
 import { signInSuccess, signFailure } from './actions';
-import SignIn from '~/pages/SignIn';
 
 export function* signIn({ payload }) {
   try {
@@ -27,23 +26,21 @@ export function* signIn({ payload }) {
 }
 export function* signUp({ payload }) {
   try {
-    const { name, telefone, cpf, email, password } = payload;
-
-    console.tron.log(payload);
+    const { name, telefone, cpf, email, password, username } = payload;
 
     yield call(api.post, 'users', {
       name,
       telefone,
       cpf,
+      username,
       email,
       password,
     });
 
     Alert.alert('Aviso', 'Usuário cadastrado com sucesso!');
-
     history.push('SignIn');
   } catch (error) {
-    Alert.alert('Aviso', 'Revise os dados informados');
+    console.tron.log(error);
     yield put(signFailure());
   }
 }
