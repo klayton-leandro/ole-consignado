@@ -1,46 +1,72 @@
 import { all, takeLatest, call, put } from 'redux-saga/effects';
 import { Alert } from 'react-native';
 import api from '~/services/api';
-import { signInSuccess, signFailure } from './actions';
+import { signInSuccess, signFailure, signUpSuccess } from './actions';
+import NavigationService from '../../../services/navigation';
+
+/* 
+  - Login do usuário no banco
+  - Params: username e password
+*/
 
 export function* signIn({ payload }) {
   try {
-    const { email, password } = payload;
+    const { username, password } = payload;
+
     const response = yield call(api.post, 'sessions', {
-      email,
+      username,
       password,
     });
 
-    const { token, users } = response.data;
-    yield put(signInSuccess(token, users));
-    if ((!token, users)) {
-      Alert.alert('Email não cadastrado', 'revise os dados informados !');
-      yield put(signFailure());
-      api.defaults.headers.Authorization = `Bearer ${token}`;
-      return;
-    }
+    const { token, user } = response.data;
+
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+
+    yield put(signInSuccess(token, user));
   } catch (error) {
-    Alert.alert('Dados incorretos', 'Verifique dados informados !');
+    Alert.alert('Aviso', 'Verifique seus dados de login e tente novamente.');
     yield put(signFailure());
   }
 }
+
+/* 
+  - Cadastra um novo usuário no banco
+  - Params: name, cpf, phone, email, username e password 
+*/
+
 export function* signUp({ payload }) {
   try {
-    const { name, telefone, cpf, email, password, username } = payload;
+    const { name, cpf, phone, email, username, password } = payload;
 
     yield call(api.post, 'users', {
       name,
-      telefone,
       cpf,
-      username,
+      phone,
       email,
+      username,
       password,
     });
 
-    Alert.alert('Aviso', 'Usuário cadastrado com sucesso!');
-    history.push('SignIn');
-  } catch (error) {
-    console.tron.log(error);
+    Alert.alert(
+      'Aviso',
+      'Cadastrado com sucesso.',
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            NavigationService.navigate('SignIn');
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+
+    yield put(signUpSuccess());
+  } catch (err) {
+    const { message } = err.response.data.error;
+    if (message) {
+      Alert.alert('Aviso', message);
+    }
     yield put(signFailure());
   }
 }
