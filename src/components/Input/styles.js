@@ -18,12 +18,14 @@ export const TInput = styled.TextInput.attrs({
   font-size: 15px;
   margin-left: 10px;
   color: #1a1a1a;
+  font-family: 'Poppins-Regular';
 `;
 
 export const TInputMasked = styled(TextInputMask).attrs({
   placeholderTextColor: '#1a1a1a',
 })`
   flex: 1;
+  font-family: 'Poppins-Regular';
   font-size: 14px;
   color: #1a1a1a;
 `;
