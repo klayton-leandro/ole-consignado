@@ -1,5 +1,5 @@
-import React from 'react';
-import { TouchableOpacity, Image, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { TouchableOpacity, Image, View, FlatList } from 'react-native';
 
 import ImagePicker from 'react-native-image-picker';
 
@@ -9,8 +9,17 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Container, Title, SubTitle } from './styles';
 import Document from '~/components/Document';
+import api from '~/services/api';
 
 export default function Dashboard() {
+  const [files, setFiles] = useState([]);
+
+  useEffect(() => {
+    api.get('files').then(response => {
+      setFiles(response.data);
+    });
+  });
+
   // lida com imagens
   function getImages(key) {
     ImagePicker.showImagePicker(options, response => {
@@ -56,8 +65,11 @@ export default function Dashboard() {
     <Container>
       <Title>Documentação</Title>
       <SubTitle>Por favor, nos envie os documentos abaixo:</SubTitle>
-
-      <Document description="Foto do rosto da frente ewe we" />
+      <FlatList
+        data={files}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => <Document description={item.description} />}
+      />
     </Container>
   );
 }
@@ -75,10 +87,9 @@ Dashboard.navigationOptions = ({ navigation }) => ({
       <Image source={logo} style={{ width: 50, height: 50 }} />
     </View>
   ),
-  headerLeft: () => (
-    <TouchableOpacity onPress={() => navigation.openDrawer()}>
-      <Icon name="menu" size={30} color="#FFF" />
+  headerRight: () => (
+    <TouchableOpacity onPress={() => dispatch}>
+      <Icon name="close" size={30} color="#FFF" />
     </TouchableOpacity>
   ),
-  headerRight: () => <View />,
 });
