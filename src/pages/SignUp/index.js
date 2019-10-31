@@ -21,45 +21,55 @@ import mancha from '~/assets/mancha.png';
 export default function SignUp({ navigation }) {
   const dispath = useDispatch();
 
+  const loading = useSelector(state => state.auth.loading);
+
+  // Refs
   const cpfRef = useRef();
-  const telefoneRef = useRef();
+  const phoneRef = useRef();
   const emailRef = useRef();
   const usernameRef = useRef();
   const passwordRef = useRef();
 
-  const loading = useSelector(state => state.auth.loading);
-
-  const [name, setName] = useState('232323');
-  const [cpf, setCpf] = useState('2322323');
-  const [telefone, setTelefone] = useState('2232323');
-  const [email, setEmail] = useState('2323e232323');
-  const [username, setUsername] = useState('232233');
-  const [password, setPassword] = useState('232323');
+  // State
+  const [name, setName] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   function handleSubmit() {
     if (!name) {
       Alert.alert('Aviso', 'Nome é obrigatório.');
     } else if (!cpf) {
       Alert.alert('Aviso', 'CPF é obrigatório.');
-    } else if (!telefone) {
+    } else if (!phone) {
       Alert.alert('Aviso', 'Telefone é obrigatório.');
     } else if (!email) {
       Alert.alert('Aviso', 'Email é obrigatório.');
+    } else if (!username) {
+      Alert.alert('Aviso', 'Usuário é obrigatório.');
     } else if (password.length < 6) {
       Alert.alert('Aviso', 'Sua senha deve ter no mínimo 6 caracteres.');
     } else {
-      dispath(signUpRequest(name, cpf, telefone, email, username, password));
+      dispath(signUpRequest(name, cpf, phone, email, username, password));
     }
   }
 
   return (
     <Scroll>
       <Container>
-        <Header>
-          <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
-            <Icon name="arrow-back" size={30} color="#CD0D0E" />
-          </TouchableOpacity>
-        </Header>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('SignIn')}
+          style={{
+            position: 'absolute',
+            top: 20,
+            left: 10,
+            zIndex: 0,
+          }}
+        >
+          <Icon name="arrow-back" size={30} color="#CD0D0E" />
+        </TouchableOpacity>
         <Image
           source={mancha}
           style={{
@@ -69,7 +79,7 @@ export default function SignUp({ navigation }) {
             zIndex: -1,
           }}
         />
-        <Title>Cadastra-se</Title>
+        <Title>Cadastre-se</Title>
         <SubTitle>Precisamos de alguns dados para efetuar o cadastro</SubTitle>
         <Image
           source={mancha}
@@ -77,7 +87,7 @@ export default function SignUp({ navigation }) {
         />
         <Form>
           <FormInput
-            icon="person-outline"
+            icon="face"
             autoCorrect={false}
             autoCapitalize="none"
             placeholder="Nome"
@@ -92,7 +102,7 @@ export default function SignUp({ navigation }) {
             autocorrect={false}
             autoCapitalize="none"
             ref={cpfRef}
-            onSubmitEditing={() => telefoneRef.current.focus()}
+            onSubmitEditing={() => phoneRef.current.focus()}
             value={cpf}
             onChangeText={value => setCpf(value)}
             masked
@@ -104,17 +114,17 @@ export default function SignUp({ navigation }) {
             placeholder="Telefone"
             autocorrect={false}
             autoCapitalize="none"
-            ref={telefoneRef}
+            ref={phoneRef}
             onSubmitEditing={() => emailRef.current.focus()}
-            value={telefone}
-            onChangeText={value => setTelefone(value)}
+            value={phone}
+            onChangeText={value => setPhone(value)}
             masked
             type="cel-phone"
           />
 
           <FormInput
             icon="mail-outline"
-            placeholder="Digite seu E-mail"
+            placeholder="E-mail"
             autocorrect={false}
             autoCapitalize="none"
             ref={emailRef}
@@ -123,7 +133,7 @@ export default function SignUp({ navigation }) {
             onChangeText={setEmail}
           />
           <FormInput
-            icon="lock-outline"
+            icon="person-outline"
             placeholder="Usuário"
             ref={usernameRef}
             onSubmitEditing={() => passwordRef.current.focus()}
