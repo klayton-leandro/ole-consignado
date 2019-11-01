@@ -51,6 +51,7 @@ export const Title = styled.Text`
   font-weight: bold;
   text-align: left;
   align-self: stretch;
+  margin-top: 70px;
   margin-bottom: 10px;
 `;
 

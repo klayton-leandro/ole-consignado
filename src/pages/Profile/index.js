@@ -1,19 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { TouchableOpacity, Image, Alert } from 'react-native';
+import { TouchableOpacity, Image, Alert, Text } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { signUpRequest } from '~/store/modules/auth/actions';
 
-import {
-  Container,
-  Form,
-  Title,
-  SubTitle,
-  Header,
-  SubmitButton,
-} from './styles';
+import { Container, Form, Title, SubmitButton } from './styles';
 import { FormInput, Scroll } from '../SignIn/styles';
 
 import mancha from '~/assets/mancha.png';
@@ -21,45 +14,60 @@ import mancha from '~/assets/mancha.png';
 export default function Profile({ navigation }) {
   const dispath = useDispatch();
 
+  const loading = useSelector(state => state.auth.loading);
+
+  // Refs
   const cpfRef = useRef();
-  const telefoneRef = useRef();
+  const phoneRef = useRef();
   const emailRef = useRef();
   const usernameRef = useRef();
   const passwordRef = useRef();
 
-  const loading = useSelector(state => state.auth.loading);
-
-  const [name, setName] = useState('232323');
-  const [cpf, setCpf] = useState('2322323');
-  const [telefone, setTelefone] = useState('2232323');
-  const [email, setEmail] = useState('2323e232323');
-  const [username, setUsername] = useState('232233');
-  const [password, setPassword] = useState('232323');
+  // State
+  const [name, setName] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   function handleSubmit() {
     if (!name) {
       Alert.alert('Aviso', 'Nome é obrigatório.');
     } else if (!cpf) {
       Alert.alert('Aviso', 'CPF é obrigatório.');
-    } else if (!telefone) {
+    } else if (!phone) {
       Alert.alert('Aviso', 'Telefone é obrigatório.');
     } else if (!email) {
       Alert.alert('Aviso', 'Email é obrigatório.');
+    } else if (!username) {
+      Alert.alert('Aviso', 'Usuário é obrigatório.');
     } else if (password.length < 6) {
       Alert.alert('Aviso', 'Sua senha deve ter no mínimo 6 caracteres.');
     } else {
-      dispath(signUpRequest(name, cpf, telefone, email, username, password));
+      dispath(signUpRequest(name, cpf, phone, email, username, password));
     }
   }
 
   return (
     <Scroll>
       <Container>
-        <Header>
-          <TouchableOpacity onPress={() => navigation.openDrawer()}>
-            <Icon name="menu" size={30} color="#CD0D0E" />
-          </TouchableOpacity>
-        </Header>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('SignIn')}
+          style={{
+            position: 'absolute',
+            top: 20,
+            right: 10,
+            zIndex: 0,
+
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+        >
+          <Text style={{ fontFamily: 'Poppins-Bold', color: '#CD0D0E' }}>
+            Sair do App
+          </Text>
+        </TouchableOpacity>
         <Image
           source={mancha}
           style={{
@@ -77,7 +85,7 @@ export default function Profile({ navigation }) {
         />
         <Form>
           <FormInput
-            icon="person-outline"
+            icon="face"
             autoCorrect={false}
             autoCapitalize="none"
             placeholder="Nome"
@@ -92,7 +100,7 @@ export default function Profile({ navigation }) {
             autocorrect={false}
             autoCapitalize="none"
             ref={cpfRef}
-            onSubmitEditing={() => telefoneRef.current.focus()}
+            onSubmitEditing={() => phoneRef.current.focus()}
             value={cpf}
             onChangeText={value => setCpf(value)}
             masked
@@ -104,17 +112,17 @@ export default function Profile({ navigation }) {
             placeholder="Telefone"
             autocorrect={false}
             autoCapitalize="none"
-            ref={telefoneRef}
+            ref={phoneRef}
             onSubmitEditing={() => emailRef.current.focus()}
-            value={telefone}
-            onChangeText={value => setTelefone(value)}
+            value={phone}
+            onChangeText={value => setPhone(value)}
             masked
             type="cel-phone"
           />
 
           <FormInput
             icon="mail-outline"
-            placeholder="Digite seu E-mail"
+            placeholder="E-mail"
             autocorrect={false}
             autoCapitalize="none"
             ref={emailRef}
@@ -123,7 +131,7 @@ export default function Profile({ navigation }) {
             onChangeText={setEmail}
           />
           <FormInput
-            icon="lock-outline"
+            icon="person-outline"
             placeholder="Usuário"
             ref={usernameRef}
             onSubmitEditing={() => passwordRef.current.focus()}
@@ -142,9 +150,16 @@ export default function Profile({ navigation }) {
           />
         </Form>
         <SubmitButton loading={loading} onPress={handleSubmit}>
-          Atualizar
+          REGISTRAR
         </SubmitButton>
       </Container>
     </Scroll>
   );
 }
+
+Profile.navigationOptions = {
+  tabBarLabel: 'Perfil',
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="person" size={20} color={tintColor} />
+  ),
+};
