@@ -5,7 +5,10 @@ export const Container = styled.View`
   justify-content: space-between;
   align-items: center;
   background-color: #ffffff;
-  padding: 20px 10px;
+  padding: 10px;
+
+  margin-bottom: 10px;
+  height: 120px;
 `;
 
 export const Left = styled.View`

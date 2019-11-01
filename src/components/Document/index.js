@@ -12,18 +12,31 @@ import {
 
 import camera from '~/assets/camera.png';
 
-export default function Document({ onChange, description }) {
+export default function Document({
+  onChange,
+  description,
+  fileUrl,
+  fileName,
+  getPhoto,
+}) {
+  console.tron.log('renderizando');
   return (
     <Container>
       <Left>
-        <IconContent>
-          <Image source={require('~/assets/smile.png')} />
-        </IconContent>
+        {!fileUrl && <Image source={require('~/assets/smile.png')} />}
+        {fileUrl && (
+          <Image
+            key={fileUrl}
+            source={{ uri: `${fileUrl}?${new Date()}`, cache: 'reload' }}
+            style={{ width: 80, height: 80 }}
+            resizeMethod="resize"
+          />
+        )}
 
         <Description>{description}</Description>
       </Left>
       <Right>
-        <CameraButton onPress={() => {}}>
+        <CameraButton onPress={getPhoto}>
           <Image source={camera} />
         </CameraButton>
       </Right>

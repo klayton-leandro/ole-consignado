@@ -1,4 +1,3 @@
-
 import storage from '@react-native-community/async-storage';
 import { persistReducer } from 'redux-persist';
 
@@ -7,7 +6,7 @@ export default reducers => {
     {
       key: 'ole',
       storage,
-      whitelist: ['auth', 'user'],
+      whitelist: ['auth'],
     },
     reducers
   );
