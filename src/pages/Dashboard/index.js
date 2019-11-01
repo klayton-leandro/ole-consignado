@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, Image, View, FlatList } from 'react-native';
+import { TouchableOpacity, Image, View, Text, FlatList } from 'react-native';
 
 import ImagePicker from 'react-native-image-picker';
 
@@ -10,19 +10,36 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Container, Title, SubTitle } from './styles';
 import Document from '~/components/Document';
 import api from '~/services/api';
+import Axios from 'axios';
+
+const options = {
+  title: 'Selecione uma opção',
+  cancelButtonTitle: 'Cancelar',
+  mediaType: 'mixed',
+
+  storageOptions: {
+    skipBackup: true,
+    path: 'images',
+  },
+};
 
 export default function Dashboard() {
   const [files, setFiles] = useState([]);
 
   useEffect(() => {
-    api.get('files').then(response => {
+    loadDocuments();
+  }, []);
+
+  async function loadDocuments() {
+    console.tron.log('carrefando');
+    await api.get('files').then(response => {
       setFiles(response.data);
     });
-  });
+  }
 
   // lida com imagens
-  function getImages(key) {
-    ImagePicker.showImagePicker(options, response => {
+  function getPhoto(id) {
+    ImagePicker.showImagePicker(options, async response => {
       if (response.didCancel) {
         return;
       }
@@ -33,63 +50,55 @@ export default function Dashboard() {
         Alert.alert('Erro ao tentar acessar a sua câmera');
       }
 
-      const source = {
-        uri: response.uri,
-        fileName: response.fileName,
-        type: response.type,
-      };
+      const data = new FormData();
 
-      if (key === 'rg') {
-        setRgDocumento(source);
-      } else if (key === 'cpf') {
-        setCpfDocumento(source);
-      } else if (key === 'estadoCivil') {
-        setEstadoCivilDocumento(source);
-      } else if (key === 'comprovanteEndereco') {
-        setComprovanteEnderecoDocumento(source);
-      } else if (key === 'renda') {
-        setRendaDocumento(source);
-      } else if (key === 'ctps') {
-        setCtpsDocumento(source);
-      } else if (key === 'formularioScr') {
-        setFormularioScr(source);
-      } else if (key === 'formularioPropostaFinanciamento') {
-        setFormularioPropostaFinanciamento(source);
-      } else if (key === 'coabitacao') {
-        setCoabitacaoDocumento(source);
-      }
+      data.append('file', {
+        uri: response.uri,
+        type: response.type,
+        name: response.fileName,
+      });
+
+      await api
+        .put(`files/${id}`, data, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then(response => {
+          loadDocuments();
+        })
+        .catch(error => {});
     });
   }
 
   return (
     <Container>
-      <Title>Documentação</Title>
-      <SubTitle>Por favor, nos envie os documentos abaixo:</SubTitle>
       <FlatList
         data={files}
+        ListHeaderComponent={() => (
+          <>
+            <Title>Documentação</Title>
+            <SubTitle>Por favor, nos envie os documentos abaixo:</SubTitle>
+          </>
+        )}
+        keyExtractor={item => String(item.id)}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => <Document description={item.description} />}
+        renderItem={({ item }) => (
+          <Document
+            fileUrl={item.url}
+            fileName={item.file}
+            description={item.description}
+            getPhoto={() => getPhoto(item.id)}
+          />
+        )}
       />
     </Container>
   );
 }
 
-Dashboard.navigationOptions = ({ navigation }) => ({
-  headerTitle: () => (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Image source={logo} style={{ width: 50, height: 50 }} />
-    </View>
+Dashboard.navigationOptions = {
+  tabBarLabel: 'Dashboard',
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="list" size={20} color={tintColor} />
   ),
-  headerRight: () => (
-    <TouchableOpacity onPress={() => dispatch}>
-      <Icon name="close" size={30} color="#FFF" />
-    </TouchableOpacity>
-  ),
-});
+};

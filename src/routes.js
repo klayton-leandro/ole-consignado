@@ -1,13 +1,12 @@
+import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
-
-import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 export default (isSigned = false) =>
   createAppContainer(
@@ -17,28 +16,23 @@ export default (isSigned = false) =>
           SignIn,
           SignUp,
         }),
-        App: createDrawerNavigator({
-          Dashboard: createStackNavigator(
-            {
-              Dashboard,
+        App: createBottomTabNavigator(
+          {
+            Dashboard,
+            Profile,
+          },
+          {
+            resetOnBlur: true,
+            tabBarOptions: {
+              keyboardHidesTabBar: true,
+              activeTintColor: '#FFF',
+              inactiveTintColor: 'rgba(255, 255, 255, 0.6)',
+              style: {
+                backgroundColor: '#FF4A4A',
+              },
             },
-            {
-              defaultNavigationOptions: {
-                headerStyle: {
-                  backgroundColor: '#CE0E0F',
-                },
-                headerTitleStyle: {
-                  alignSelf: 'center',
-                  backgroundColor: 'blue',
-                },
-              },
-              navigationOptions: {
-                title: 'Dashboard',
-              },
-            }
-          ),
-          Profile,
-        }),
+          }
+        ),
       },
       {
         initialRouteName: isSigned ? 'App' : 'Sign',
