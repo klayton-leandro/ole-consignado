@@ -8,29 +8,32 @@ export const Container = styled.View`
   padding: 10px;
 
   margin-bottom: 10px;
-  height: 120px;
+  min-height: 100px;
 `;
 
 export const Left = styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  flex-basis: 70%;
+  flex-basis: 80%;
+
+  border-right-width: 1;
+  border-color: #ccc;
 `;
 
 export const Right = styled.View`
   justify-content: center;
   align-items: center;
 
-  flex-basis: 30%;
-  align-self: stretch;
+  flex-basis: 20%;
 `;
 
 export const Description = styled.Text`
   margin-left: 5px;
   color: #000;
-  font-size: 15px;
+  font-size: 12px;
   flex: 1;
+  font-family: 'Poppins-Regular';
 `;
 
 export const IconContent = styled.View`
@@ -41,5 +44,9 @@ export const IconContent = styled.View`
   padding: 10px;
   align-self: stretch;
 `;
+
+export const Status = styled.View``;
+
+export const StatusDescription = styled.Text``;
 
 export const CameraButton = styled.TouchableOpacity``;

@@ -53,7 +53,7 @@ export default function Profile({ navigation }) {
     <Scroll>
       <Container>
         <TouchableOpacity
-          onPress={() => navigation.navigate('SignIn')}
+          onPress={() => singIou}
           style={{
             position: 'absolute',
             top: 20,

@@ -39,7 +39,7 @@ export default function Dashboard() {
 
   // lida com imagens
   function getPhoto(id) {
-    ImagePicker.showImagePicker(options, async response => {
+    ImagePicker.launchCamera(options, async response => {
       if (response.didCancel) {
         return;
       }
