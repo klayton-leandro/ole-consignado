@@ -88,9 +88,11 @@ export default function SignUp({ navigation }) {
         <Form>
           <FormInput
             icon="face"
+            keyboardType="default"
             autoCorrect={false}
             autoCapitalize="none"
             placeholder="Nome"
+            returnKeyType="next"
             onSubmitEditing={() => cpfRef.current.focus()}
             value={name}
             onChangeText={setName}
@@ -98,10 +100,10 @@ export default function SignUp({ navigation }) {
 
           <FormInput
             icon="recent-actors"
+            keyboardType="number-pad"
             placeholder="CPF"
-            autocorrect={false}
-            autoCapitalize="none"
-            ref={cpfRef}
+            returnKeyType="next"
+            forwardRef={cpfRef}
             onSubmitEditing={() => phoneRef.current.focus()}
             value={cpf}
             onChangeText={value => setCpf(value)}
@@ -111,10 +113,12 @@ export default function SignUp({ navigation }) {
 
           <FormInput
             icon="call"
+            keyboardType="phone-pad"
             placeholder="Telefone"
             autocorrect={false}
             autoCapitalize="none"
-            ref={phoneRef}
+            forwardRef={phoneRef}
+            returnKeyType="next"
             onSubmitEditing={() => emailRef.current.focus()}
             value={phone}
             onChangeText={value => setPhone(value)}
@@ -123,8 +127,10 @@ export default function SignUp({ navigation }) {
           />
 
           <FormInput
+            keyboardType="email-address"
             icon="mail-outline"
             placeholder="E-mail"
+            returnKeyType="next"
             autocorrect={false}
             autoCapitalize="none"
             ref={emailRef}
@@ -134,6 +140,7 @@ export default function SignUp({ navigation }) {
           />
           <FormInput
             icon="person-outline"
+            returnKeyType="next"
             placeholder="Usuário"
             ref={usernameRef}
             onSubmitEditing={() => passwordRef.current.focus()}

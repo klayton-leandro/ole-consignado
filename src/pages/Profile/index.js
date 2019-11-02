@@ -1,15 +1,16 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { TouchableOpacity, Image, Alert, Text } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { signUpRequest } from '~/store/modules/auth/actions';
+import { signUpRequest, signOut } from '~/store/modules/auth/actions';
 
 import { Container, Form, Title, SubmitButton } from './styles';
 import { FormInput, Scroll } from '../SignIn/styles';
 
 import mancha from '~/assets/mancha.png';
+import api from '~/services/api';
 
 export default function Profile({ navigation }) {
   const dispath = useDispatch();
@@ -30,6 +31,19 @@ export default function Profile({ navigation }) {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    async function loadUser() {
+      await api.get('user').then(response => {
+        const { name, cpf, phone, email, username } = response.data;
+        setName(name);
+        setCpf(cpf);
+        setPhone(phone);
+        setEmail(email);
+        setUsername(username);
+      });
+    }
+  });
 
   function handleSubmit() {
     if (!name) {
@@ -53,7 +67,7 @@ export default function Profile({ navigation }) {
     <Scroll>
       <Container>
         <TouchableOpacity
-          onPress={() => singIou}
+          onPress={() => dispath(signOut())}
           style={{
             position: 'absolute',
             top: 20,

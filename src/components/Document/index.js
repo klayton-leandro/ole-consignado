@@ -1,6 +1,6 @@
 import React from 'react';
-import { Image } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Image, View } from 'react-native';
+
 import {
   Container,
   Description,
@@ -8,15 +8,23 @@ import {
   Status,
   StatusDescription,
   Right,
+  Content,
   CameraButton,
 } from './styles';
 
 import camera from '~/assets/camera.png';
 import IconHandler from '../IconHandler';
 
-export default function Document({ icon, description, fileUrl, getPhoto }) {
+export default function Document({
+  icon,
+  description,
+  fileUrl,
+  getPhoto,
+  checked,
+  message,
+}) {
   return (
-    <>
+    <Content>
       <Container>
         <Left>
           <IconHandler icon={icon} fileUrl={fileUrl} />
@@ -25,7 +33,7 @@ export default function Document({ icon, description, fileUrl, getPhoto }) {
               key={fileUrl}
               source={{ uri: `${fileUrl}?${new Date()}`, cache: 'reload' }}
               style={{ width: 80, height: 80 }}
-              resizeMode="contain"
+              resizeMode="cover"
               resizeMethod="resize"
             />
           )}
@@ -38,6 +46,13 @@ export default function Document({ icon, description, fileUrl, getPhoto }) {
           </CameraButton>
         </Right>
       </Container>
-    </>
+      <Status>
+        <StatusDescription>
+          {checked && 'Documento validado e aprovado'}
+          {!fileUrl && 'Aguardando o envio'}
+          {message && '* ' + message}
+        </StatusDescription>
+      </Status>
+    </Content>
   );
 }

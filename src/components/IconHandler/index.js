@@ -1,22 +1,79 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 export default function IconHandler({ fileUrl, icon }) {
   return (
     <>
       {!fileUrl && icon === 'smile' && (
-        <Image source={require('../../assets/icons/smile.png')} />
+        <View
+          style={{
+            width: 80,
+            height: 80,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Image
+            source={require('../../assets/icons/smile.png')}
+            style={{ width: 80, height: 80 }}
+          />
+        </View>
       )}
       {!fileUrl && icon === 'rg_frente' && (
-        <Image source={require('../../assets/icons/rg_frente.png')} />
+        <View
+          style={{
+            width: 80,
+            height: 80,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Image
+            source={require('../../assets/icons/rg_frente.png')}
+            style={{ width: 80, height: 80 }}
+          />
+        </View>
       )}
       {!fileUrl && icon === 'rg_verso' && (
-        <Image source={require('../../assets/icons/rg_verso.png')} />
+        <View
+          style={{
+            width: 80,
+            height: 80,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Image
+            source={require('../../assets/icons/rg_verso.png')}
+            style={{ width: 80, height: 80 }}
+          />
+        </View>
       )}
       {!fileUrl && icon === 'home' && (
-        <Image source={require('../../assets/icons/home.png')} />
+        <View
+          style={{
+            width: 80,
+            height: 80,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Image
+            source={require('../../assets/icons/home.png')}
+            style={{ width: 80, height: 80 }}
+          />
+        </View>
       )}
       {!fileUrl && icon === 'dollar-sign' && (
-        <Image source={require('../../assets/icons/dollar-sign.png')} />
+        <View
+          style={{
+            width: 80,
+            height: 80,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Image source={require('../../assets/icons/dollar-sign.png')} />
+        </View>
       )}
     </>
   );

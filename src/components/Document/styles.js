@@ -4,11 +4,13 @@ export const Container = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #ffffff;
-  padding: 10px;
+`;
 
+export const Content = styled.View`
+  padding: 10px;
   margin-bottom: 10px;
   min-height: 100px;
+  background-color: #ffffff;
 `;
 
 export const Left = styled.View`
@@ -45,8 +47,14 @@ export const IconContent = styled.View`
   align-self: stretch;
 `;
 
-export const Status = styled.View``;
+export const Status = styled.View`
+  margin-top: 10px;
+`;
 
-export const StatusDescription = styled.Text``;
+export const StatusDescription = styled.Text`
+  font-family: 'Poppins-Regular';
+  font-size: 11px;
+  color: #cd0d0e;
+`;
 
 export const CameraButton = styled.TouchableOpacity``;

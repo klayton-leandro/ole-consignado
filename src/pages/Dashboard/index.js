@@ -85,6 +85,8 @@ export default function Dashboard() {
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <Document
+            message={item.message}
+            checked={item.checked}
             icon={item.icon}
             fileUrl={item.url}
             fileName={item.file}
