@@ -13,7 +13,7 @@ import {
 import camera from '~/assets/camera.png';
 
 export default function Document({
-  onChange,
+  icon,
   description,
   fileUrl,
   fileName,
@@ -23,7 +23,7 @@ export default function Document({
   return (
     <Container>
       <Left>
-        {!fileUrl && <Image source={require('~/assets/smile.png')} />}
+        {!fileUrl && <Image source={require(`~/assets/icons/${icon}`)} />}
         {fileUrl && (
           <Image
             key={fileUrl}

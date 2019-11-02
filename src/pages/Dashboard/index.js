@@ -85,6 +85,7 @@ export default function Dashboard() {
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <Document
+            icon={item.icon}
             fileUrl={item.url}
             fileName={item.file}
             description={item.description}
