@@ -1,10 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { ImageBackground, Alert } from 'react-native';
-import { Image } from 'react-native';
+import { Image, ImageBackground, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import Background from '~/components/Background';
+
 import { signInRequest } from '~/store/modules/auth/actions';
+
 import logo from '~/assets/logo_red.png';
+import Background from '~/components/Background';
+
 import {
   Container,
   Form,
@@ -68,7 +70,9 @@ export default function SignIn({ navigation }) {
                 value={password}
                 onChangeText={setPassword}
               />
-              <SubmitButton onPress={handleSubmit}>Entrar </SubmitButton>
+              <SubmitButton loading={loading} onPress={handleSubmit}>
+                Entrar
+              </SubmitButton>
             </Form>
 
             <SignLink onPress={() => navigation.navigate('SignUp')}>

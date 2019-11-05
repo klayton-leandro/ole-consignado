@@ -63,9 +63,9 @@ export function* signUp({ payload }) {
 
     yield put(signUpSuccess());
   } catch (err) {
-    const { message } = err.response.data.error;
-    if (message) {
-      Alert.alert('Aviso', message);
+    const error = err.response && err.response.data.error;
+    if (error && error.message) {
+      Alert.alert('Aviso', error.message);
     }
     yield put(signFailure());
   }

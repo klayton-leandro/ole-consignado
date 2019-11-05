@@ -55,6 +55,9 @@ export const StatusDescription = styled.Text`
   font-family: 'Poppins-Regular';
   font-size: 11px;
   color: #cd0d0e;
+  align-self: stretch;
+
+  text-align: justify;
 `;
 
 export const CameraButton = styled.TouchableOpacity``;

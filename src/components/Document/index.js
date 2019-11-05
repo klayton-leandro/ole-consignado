@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, View } from 'react-native';
+import { Image, ActivityIndicator } from 'react-native';
 
 import {
   Container,
@@ -37,7 +37,6 @@ export default function Document({
               resizeMethod="resize"
             />
           )}
-
           <Description>{description}</Description>
         </Left>
         <Right>
@@ -48,9 +47,16 @@ export default function Document({
       </Container>
       <Status>
         <StatusDescription>
-          {checked && 'Documento validado e aprovado'}
-          {!fileUrl && 'Aguardando o envio'}
-          {message && '* ' + message}
+          {!fileUrl && '* Aguardando envio'}
+          {fileUrl && checked === null && 'Status: Em análise'}
+
+          {fileUrl && checked === false && 'Status: Documento negado'}
+          {fileUrl &&
+            checked === true &&
+            'Status: Documento validado e aprovado'}
+        </StatusDescription>
+        <StatusDescription style={{ fontFamily: 'Poppins-Bold' }}>
+          {message && 'Observação: ' + message}
         </StatusDescription>
       </Status>
     </Content>

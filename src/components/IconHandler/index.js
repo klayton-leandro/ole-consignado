@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, View } from 'react-native';
+
 export default function IconHandler({ fileUrl, icon }) {
   return (
     <>
@@ -12,10 +13,7 @@ export default function IconHandler({ fileUrl, icon }) {
             alignItems: 'center',
           }}
         >
-          <Image
-            source={require('../../assets/icons/smile.png')}
-            style={{ width: 80, height: 80 }}
-          />
+          <Image source={require('../../assets/icons/smile.png')} />
         </View>
       )}
       {!fileUrl && icon === 'rg_frente' && (
@@ -27,10 +25,7 @@ export default function IconHandler({ fileUrl, icon }) {
             alignItems: 'center',
           }}
         >
-          <Image
-            source={require('../../assets/icons/rg_frente.png')}
-            style={{ width: 80, height: 80 }}
-          />
+          <Image source={require('../../assets/icons/rg_frente.png')} />
         </View>
       )}
       {!fileUrl && icon === 'rg_verso' && (
@@ -42,10 +37,7 @@ export default function IconHandler({ fileUrl, icon }) {
             alignItems: 'center',
           }}
         >
-          <Image
-            source={require('../../assets/icons/rg_verso.png')}
-            style={{ width: 80, height: 80 }}
-          />
+          <Image source={require('../../assets/icons/rg_verso.png')} />
         </View>
       )}
       {!fileUrl && icon === 'home' && (
@@ -57,10 +49,7 @@ export default function IconHandler({ fileUrl, icon }) {
             alignItems: 'center',
           }}
         >
-          <Image
-            source={require('../../assets/icons/home.png')}
-            style={{ width: 80, height: 80 }}
-          />
+          <Image source={require('../../assets/icons/home.png')} />
         </View>
       )}
       {!fileUrl && icon === 'dollar-sign' && (
