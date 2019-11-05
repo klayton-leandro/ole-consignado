@@ -92,8 +92,6 @@ export default function SignUp({ navigation }) {
             autoCorrect={false}
             autoCapitalize="none"
             placeholder="Nome"
-            returnKeyType="next"
-            onSubmitEditing={() => cpfRef.current.focus()}
             value={name}
             onChangeText={setName}
           />
@@ -102,9 +100,6 @@ export default function SignUp({ navigation }) {
             icon="recent-actors"
             keyboardType="number-pad"
             placeholder="CPF"
-            returnKeyType="next"
-            forwardRef={cpfRef}
-            onSubmitEditing={() => phoneRef.current.focus()}
             value={cpf}
             onChangeText={value => setCpf(value)}
             masked
@@ -117,9 +112,7 @@ export default function SignUp({ navigation }) {
             placeholder="Telefone"
             autocorrect={false}
             autoCapitalize="none"
-            forwardRef={phoneRef}
-            returnKeyType="next"
-            onSubmitEditing={() => emailRef.current.focus()}
+            ref={phoneRef}
             value={phone}
             onChangeText={value => setPhone(value)}
             masked
@@ -130,11 +123,8 @@ export default function SignUp({ navigation }) {
             keyboardType="email-address"
             icon="mail-outline"
             placeholder="E-mail"
-            returnKeyType="next"
             autocorrect={false}
             autoCapitalize="none"
-            ref={emailRef}
-            onSubmitEditing={() => usernameRef.current.focus()}
             value={email}
             onChangeText={setEmail}
           />
@@ -142,8 +132,6 @@ export default function SignUp({ navigation }) {
             icon="person-outline"
             returnKeyType="next"
             placeholder="Usuário"
-            ref={usernameRef}
-            onSubmitEditing={() => passwordRef.current.focus()}
             value={username}
             onChangeText={setUsername}
           />
@@ -151,8 +139,6 @@ export default function SignUp({ navigation }) {
             icon="lock-outline"
             secureTextEntry
             placeholder="Digite sua senha"
-            ref={passwordRef}
-            returnKeyType="send"
             onSubmitEditing={handleSubmit}
             value={password}
             onChangeText={setPassword}
