@@ -4,7 +4,9 @@ import { TouchableOpacity, Image, Alert, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { signUpRequest, signOut } from '~/store/modules/auth/actions';
+import { signOut } from '~/store/modules/auth/actions';
+
+import { updateProfileRequest } from '~/store/modules/user/actions';
 
 import { Container, Form, Title, SubmitButton } from './styles';
 import { FormInput, Scroll } from '../SignIn/styles';
@@ -26,7 +28,6 @@ export default function Profile({ navigation }) {
 
   // State
   const [name, setName] = useState('');
-  const [cpf, setCpf] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -37,29 +38,28 @@ export default function Profile({ navigation }) {
       await api.get('user').then(response => {
         const { name, cpf, phone, email, username } = response.data;
         setName(name);
-        setCpf(cpf);
+
         setPhone(phone);
         setEmail(email);
         setUsername(username);
       });
     }
-  });
+    loadUser();
+  }, []);
 
   function handleSubmit() {
     if (!name) {
       Alert.alert('Aviso', 'Nome é obrigatório.');
-    } else if (!cpf) {
-      Alert.alert('Aviso', 'CPF é obrigatório.');
     } else if (!phone) {
       Alert.alert('Aviso', 'Telefone é obrigatório.');
     } else if (!email) {
       Alert.alert('Aviso', 'Email é obrigatório.');
     } else if (!username) {
       Alert.alert('Aviso', 'Usuário é obrigatório.');
-    } else if (password.length < 6) {
-      Alert.alert('Aviso', 'Sua senha deve ter no mínimo 6 caracteres.');
+    } else if (password && password.length < 6) {
+      Alert.alert('Aviso', 'Sua  nova senha deve ter no mínimo 6 caracteres.');
     } else {
-      dispath(signUpRequest(name, cpf, phone, email, username, password));
+      dispath(updateProfileRequest({ name, phone, email, password }));
     }
   }
 
@@ -91,7 +91,12 @@ export default function Profile({ navigation }) {
             zIndex: -1,
           }}
         />
-        <Title>Perfil</Title>
+        <Title>
+          Perfil -{' '}
+          <Text style={{ fontSize: 18, fontFamily: 'Poppins Regular' }}>
+            {username}
+          </Text>
+        </Title>
 
         <Image
           source={mancha}
@@ -106,19 +111,6 @@ export default function Profile({ navigation }) {
             onSubmitEditing={() => cpfRef.current.focus()}
             value={name}
             onChangeText={setName}
-          />
-
-          <FormInput
-            icon="recent-actors"
-            placeholder="CPF"
-            autocorrect={false}
-            autoCapitalize="none"
-            ref={cpfRef}
-            onSubmitEditing={() => phoneRef.current.focus()}
-            value={cpf}
-            onChangeText={value => setCpf(value)}
-            masked
-            type="cpf"
           />
 
           <FormInput
@@ -144,14 +136,7 @@ export default function Profile({ navigation }) {
             value={email}
             onChangeText={setEmail}
           />
-          <FormInput
-            icon="person-outline"
-            placeholder="Usuário"
-            ref={usernameRef}
-            onSubmitEditing={() => passwordRef.current.focus()}
-            value={username}
-            onChangeText={setUsername}
-          />
+
           <FormInput
             icon="lock-outline"
             secureTextEntry

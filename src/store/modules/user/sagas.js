@@ -1,22 +1,23 @@
 import { all, takeLatest, call, put } from 'redux-saga/effects';
-import {Alert} from 'react-native';
+import { Alert } from 'react-native';
 import api from '~/services/api';
 import { updateProfileSuccess, updateProfileFailure } from './actions';
 
 export function* updateProfile({ payload }) {
   try {
-    const { name, email, avatar_id, ...rest } = payload.data;
+    const { name, email, phone, password, username } = payload.data;
 
     const profile = {
       name,
       email,
-      avatar_id,
-      ...(rest.oldPassword ? rest : {}),
+      phone,
+      password,
+      username,
     };
 
     const response = yield call(api.put, 'users', profile);
 
-    Alert.alert('Perfil atualizado com sucesso!');
+    Alert.alert('Aviso', 'Perfil atualizado com sucesso!');
     yield put(updateProfileSuccess(response.data));
   } catch (error) {
     Alert.alert('Erro ao atualizar perfil, confira seus dados');
