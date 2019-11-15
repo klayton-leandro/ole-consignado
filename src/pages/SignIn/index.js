@@ -28,16 +28,16 @@ export default function SignIn({ navigation }) {
 
   const loading = useSelector(state => state.auth.loading);
 
-  const [username, setUsername] = useState('');
+  const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
 
   function handleSubmit() {
-    if (!username) {
-      Alert.alert('Aviso', 'O usuário é obrigatório');
+    if (!cpf) {
+      Alert.alert('Aviso', 'O cpf é obrigatório');
     } else if (!password) {
       Alert.alert('Aviso', 'A senha é obrigatória');
     } else {
-      dispatch(signInRequest(username, password));
+      dispatch(signInRequest(cpf, password));
     }
   }
   return (
@@ -45,20 +45,27 @@ export default function SignIn({ navigation }) {
       <Background>
         <Scroll>
           <Container>
-            <Image source={logo} style={{ marginTop: 40 }} />
+            <Image source={logo}  resizeMode="center" style={{width: 150, height: 150,marginVertical: 10}} />
             <OlaText>Olá!</OlaText>
             <WelcomeText>Bem-vindo. Por favor, entre em sua conta!</WelcomeText>
             <Form>
+
+  
+
               <FormInput
-                icon="person-outline"
-                keyboardType="default"
+                icon="recent-actors"
+                keyboardType="number-pad"
                 autoCorrect={false}
                 autoCapitalize="none"
-                placeholder="Usuário"
+                placeholder="CPF"
                 returnKeyType="next"
                 onSubmitEditing={() => passwordRef.current.focus()}
-                value={username}
-                onChangeText={setUsername}
+                value={cpf}
+                onChangeText={value => setCpf(value)}
+
+                masked
+                type="cpf"
+
               />
               <FormInput
                 icon="lock-outline"

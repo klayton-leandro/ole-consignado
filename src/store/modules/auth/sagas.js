@@ -11,10 +11,10 @@ import NavigationService from '../../../services/navigation';
 
 export function* signIn({ payload }) {
   try {
-    const { username, password } = payload;
+    const { cpf, password } = payload;
 
     const response = yield call(api.post, 'sessions', {
-      username,
+      cpf,
       password,
     });
 
@@ -36,14 +36,13 @@ export function* signIn({ payload }) {
 
 export function* signUp({ payload }) {
   try {
-    const { name, cpf, phone, email, username, password } = payload;
+    const { name, cpf, phone, email, password } = payload;
 
     yield call(api.post, 'users', {
       name,
       cpf,
       phone,
       email,
-      username,
       password,
     });
 

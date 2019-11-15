@@ -1,7 +1,7 @@
-export function signInRequest(username, password) {
+export function signInRequest(cpf, password) {
   return {
     type: '@auth/SIGN_IN_REQUEST',
-    payload: { username, password },
+    payload: { cpf, password },
   };
 }
 
@@ -12,7 +12,7 @@ export function signInSuccess(token, user) {
   };
 }
 
-export function signUpRequest(name, cpf, phone, email, username, password) {
+export function signUpRequest(name, cpf, phone, email, password) {
   return {
     type: '@auth/SIGN_UP_REQUEST',
     payload: {
@@ -20,8 +20,8 @@ export function signUpRequest(name, cpf, phone, email, username, password) {
       cpf,
       phone,
       email,
-      username,
       password,
+      collaborator: false,
     },
   };
 }

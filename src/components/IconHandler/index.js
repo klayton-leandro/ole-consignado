@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function IconHandler({ fileUrl, icon }) {
   return (
@@ -64,6 +65,32 @@ export default function IconHandler({ fileUrl, icon }) {
           <Image source={require('../../assets/icons/dollar-sign.png')} />
         </View>
       )}
+      {!fileUrl && icon === 'insert-drive-file' && (
+        <View
+          style={{
+            width: 80,
+            height: 80,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Icon name="insert-drive-file" size={24} color="#cd0d0e" />
+        </View>
+      )}
+
+      {!fileUrl && icon === 'folder-open' && (
+        <View
+          style={{
+            width: 80,
+            height: 80,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Icon name="folder-open" size={24} color="#cd0d0e" />
+        </View>
+      )}
+
     </>
   );
 }

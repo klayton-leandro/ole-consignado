@@ -47,12 +47,10 @@ export default function SignUp({ navigation }) {
       Alert.alert('Aviso', 'Telefone é obrigatório.');
     } else if (!email) {
       Alert.alert('Aviso', 'Email é obrigatório.');
-    } else if (!username) {
-      Alert.alert('Aviso', 'Usuário é obrigatório.');
-    } else if (password.length < 6) {
+    }else if (password.length < 6) {
       Alert.alert('Aviso', 'Sua senha deve ter no mínimo 6 caracteres.');
     } else {
-      dispath(signUpRequest(name, cpf, phone, email, username, password));
+      dispath(signUpRequest(name, cpf, phone, email, password));
     }
   }
 
@@ -127,13 +125,6 @@ export default function SignUp({ navigation }) {
             autoCapitalize="none"
             value={email}
             onChangeText={setEmail}
-          />
-          <FormInput
-            icon="person-outline"
-            returnKeyType="next"
-            placeholder="Usuário"
-            value={username}
-            onChangeText={setUsername}
           />
           <FormInput
             icon="lock-outline"

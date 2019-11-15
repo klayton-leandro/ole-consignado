@@ -30,18 +30,17 @@ export default function Profile({ navigation }) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
+
   const [password, setPassword] = useState('');
 
   useEffect(() => {
     async function loadUser() {
       await api.get('user').then(response => {
-        const { name, cpf, phone, email, username } = response.data;
+        const { name, phone, email } = response.data;
         setName(name);
 
         setPhone(phone);
         setEmail(email);
-        setUsername(username);
       });
     }
     loadUser();
@@ -54,8 +53,6 @@ export default function Profile({ navigation }) {
       Alert.alert('Aviso', 'Telefone é obrigatório.');
     } else if (!email) {
       Alert.alert('Aviso', 'Email é obrigatório.');
-    } else if (!username) {
-      Alert.alert('Aviso', 'Usuário é obrigatório.');
     } else if (password && password.length < 6) {
       Alert.alert('Aviso', 'Sua  nova senha deve ter no mínimo 6 caracteres.');
     } else {
@@ -92,10 +89,7 @@ export default function Profile({ navigation }) {
           }}
         />
         <Title>
-          Perfil -{' '}
-          <Text style={{ fontSize: 18, fontFamily: 'Poppins Regular' }}>
-            {username}
-          </Text>
+          Perfil
         </Title>
 
         <Image
