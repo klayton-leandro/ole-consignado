@@ -143,7 +143,7 @@ export default function Profile({ navigation }) {
           />
         </Form>
         <SubmitButton loading={loading} onPress={handleSubmit}>
-          REGISTRAR
+          ATUALIZAR
         </SubmitButton>
       </Container>
     </Scroll>
